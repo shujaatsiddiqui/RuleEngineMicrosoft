@@ -28,9 +28,18 @@ namespace JSONToExpressionConverter
         public static string GetRuleInLambaFormat(Root root = null, Rules rules = null)
         {
             string s = "";
+
+            if (rules == null)
+                rules = new Rules();
+
+            rules.rules = root != null ? root.rules : rules.rules;
+            rules.condition = root != null ? root.condition : rules.condition;
             if (rules.rules == null || rules.rules.Count == 0) //get the condition
             {
-                return $"{rules.field} {rules.@operator} {rules.value} {rules.condition} "; //change this to your real getCondition function.
+                var condition = root != null ? root.condition : rules.condition;
+                var value = int.TryParse(rules.value, out int n) ? rules.value : $"'{rules.value}'";
+                s=  $"{rules.field} {rules.@operator} {value} {condition} "; //change this to your real getCondition function.
+                return s;
             }
             else
             {

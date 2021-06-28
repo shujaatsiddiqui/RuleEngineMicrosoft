@@ -85,8 +85,8 @@ namespace JSONToExpressionConverter
         {
 
             Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("ComplexJson.json")));
-            string json = RuleParser.GetRuleInLambaFormat(null, r.rules[0]);
-
+            string json = RuleParser.GetRuleInLambaFormat(r, null);
+            var s = "";
             //string json = JsonConvert.SerializeObject(CreateDemoData());
 
             //         Expression<Predicate<int>> expression = Expression.Lambda<Predicate<int>>(

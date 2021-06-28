@@ -14,7 +14,7 @@ namespace JSONToExpressionConverter
 {
     class Program
     {
-        static string GetFilePath(string fileName)
+        public static string GetFilePath(string fileName)
         {
             return Directory.GetParent(Environment.CurrentDirectory).
                                 Parent.Parent.FullName + "\\" + fileName;
@@ -39,61 +39,64 @@ namespace JSONToExpressionConverter
         //    return r;
         //}
 
-        static ExpressionJson CreateDemoData()
-        {
-            ExpressionJson json = new ExpressionJson();
-            json.Conditions = new List<Condition>()
-            {
-                new Condition() { Field = "firstname", Value = "shujaat", Operator= "==" },
-                new Condition() { Field = "lastname", Value = "siddiqui", Operator= "==" },
-                new Condition()
-                {
-                      Conditions = new List<ExpressionJson>()
-                      {
-                           new ExpressionJson()
-                           {
-                               Conditions = new List<Condition>()
-                               {
-                                   new Condition() { Field = "DOB", Value= "31", Operator= "==" },
-                                   new Condition() { Field = "DOB", Value= "28", Operator= "==" },
-                                   new Condition()
-                                   {
-                                              Conditions = new List<ExpressionJson>()
-                                              {
-                                                   new ExpressionJson() {
-                                                       Conditions = new List<Condition>()
-                                                       {
-                                                           new Condition() { Field = "role", Value= "admin", Operator= "==" },
-                                                           new Condition() { Field = "role", Value= "superadmin", Operator= "==" }
-                                                       },
-                                                       ConjunctionOperator = "OR",
+        //static Root CreateDemoData()
+        //{
+        //    Root json = new Root();
+        //    json.rules = new List<Rules>()
+        //    {
+        //        new Rules() { field = "firstname", Value = "shujaat", Operator= "==" },
+        //        new Rules() { field = "lastname", Value = "siddiqui", Operator= "==" },
+        //        new Rules()
+        //        {
+        //              Conditions = new List<Root>()
+        //              {
+        //                   new Root()
+        //                   {
+        //                       rules = new List<Rules>()
+        //                       {
+        //                           new Rules() { field = "DOB", Value= "31", Operator= "==" },
+        //                           new Rules() { field = "DOB", Value= "28", Operator= "==" },
+        //                           new Rules()
+        //                           {
+        //                                      Conditions = new List<Root>()
+        //                                      {
+        //                                           new Root() {
+        //                                               rules = new List<Rules>()
+        //                                               {
+        //                                                   new Rules() { field = "role", Value= "admin", Operator= "==" },
+        //                                                   new Rules() { field = "role", Value= "superadmin", Operator= "==" }
+        //                                               },
+        //                                               ConjunctionOperator = "OR",
 
-                                                   }
-                                              }
-                                   }
-                               },
-                               ConjunctionOperator = "OR",
+        //                                           }
+        //                                      }
+        //                           }
+        //                       },
+        //                       ConjunctionOperator = "OR",
 
-                           }
-                      }
-                }
-            };
-            json.ConjunctionOperator = "AND";
-            return json;
-        }
+        //                   }
+        //              }
+        //        }
+        //    };
+        //    json.ConjunctionOperator = "AND";
+        //    return json;
+        //}
         static void Main(string[] args)
         {
 
-            string json = JsonConvert.SerializeObject(CreateDemoData());
+            Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("ComplexJson.json")));
+            string json = RuleParser.GetRuleInLambaFormat(null, r.rules[0]);
 
-            Expression<Predicate<int>> expression = Expression.Lambda<Predicate<int>>(
-                 Expression.LessThan(
-                          Expression.Parameter(typeof(int), "n"),
-                          Expression.Constant(10)
-                ),
-               Expression.Parameter(typeof(int), "n")
-   );
-            var str = expression.Body.ToString();
+            //string json = JsonConvert.SerializeObject(CreateDemoData());
+
+            //         Expression<Predicate<int>> expression = Expression.Lambda<Predicate<int>>(
+            //              Expression.LessThan(
+            //                       Expression.Parameter(typeof(int), "n"),
+            //                       Expression.Constant(10)
+            //             ),
+            //            Expression.Parameter(typeof(int), "n")
+            //);
+            //         var str = expression.Body.ToString();
             //dynamic stuff = JObject.Parse(File.ReadAllText(GetFilePath("dynamicjson.json")));
 
             //foreach (var item in (JArray)stuff.filter.and)

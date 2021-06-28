@@ -16,23 +16,23 @@ namespace JSONToExpressionConverter
         public bool Discount { get; set; }
     }
 
-    public class ExpressionJson
+    public class Root
     {
-        public List<Condition> Conditions { get; set; }
-        public string ConjunctionOperator { get; set; }
+        public List<Rules> rules { get; set; }
+        public string condition { get; set; }
     }
 
-    public class Condition
+    public class Rules
     {
 
-        public string Field { get; set; }
-        public string Operator { get; set; }
+        public string field { get; set; }
+        public string @operator { get; set; }
 
-        public string Value { get; set; }
+        public string value { get; set; }
 
-        public string TypeOfField { get; set; } = "string";
+        public string condition { get; set; }
 
-        public List<ExpressionJson> Conditions { get; set; }
+        public List<Rules> rules { get; set; }
     }
 
 

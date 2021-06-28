@@ -1,69 +1,70 @@
+//(portfolioSegment =  'Residential' AND  portfolioSegment = 'Commercial' And portfolioSegment = 'Plot') and (riskRating = 10) And (originationDate = 2021-06-27T19:00:00.000Z)
+
 {
   "condition": "and",
   "criteria": [
     {
-      "field": "productType",
-      "operator": "in",
-      "value": [
-        "First Lien Mortgages"
-      ]
-    },
-    {
-      "field": "daysDelinquent",
-      "operator": "<",
-      "value": 96832
-    },
-    {
-      "condition": "and",
+      "condition": "or",
       "criteria": [
-        {
-          "field": "state",
-          "operator": "in",
-          "value": [
-            "FL"
-          ]
-        },
-        {
-          "field": "maturityDate",
-          "operator": ">",
-          "value": "2018-09-14T19:00:00.000Z"
-        },
-        {
-          "condition": "or",
-          "criteria": [
-            {
-              "field": "portfolioSegment",
-              "operator": "=",
-              "valuge": "Residential"
-            },
-            {
-              "field": "originationDate",
-              "operator": "!=",
-              "value": "2017-07-07T19:00:00.000Z"
-            },
-            {
-              "condition": "or",
-              "criteria": [
-                {
-                  "field": "originationDate",
-                  "operator": ">=",
-                  "value": "2018-10-26T19:00:00.000Z"
-                },
-                {
-                  "field": "state",
-                  "operator": "=",
-                  "value": "FL"
-                }
-              ]
-            }
-          ]
-        },
         {
           "field": "portfolioSegment",
           "operator": "=",
           "value": "Residential"
+        },
+        {
+          "field": "portfolioSegment",
+          "operator": "=",
+          "value": "Comercial"
+        },
+        {
+          "field": "portfolioSegment",
+          "operator": "=",
+          "value": "Plot"
+        },
+        {
+          "field": "portfolioSegment",
+          "operator": "Any",
+          "values": {
+            "condition": "and",
+            "criteria": [
+              {
+                "field": "portfolioSegment",
+                "operator": "=",
+                "value": "Residential"
+              },
+              {
+                "field": "portfolioSegment",
+                "operator": "Any",
+                "values": {
+                  "condition": "and",
+                  "criteria": [
+                    {
+                      "field": "DOB",
+                      "operator": "=",
+                      "value": "28"
+                    },
+                    {
+                      "field": "portfolioSegment",
+                      "operator": "=",
+                      "value": "Comercial"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
+    },
+    {
+      "field": "riskRating",
+      "operator": "=",
+      "value": 10
+    },
+    {
+      "field": "originationDate",
+      "operator": "=",
+      "value": "2021-06-27T19:00:00.000Z"
     }
   ]
 }

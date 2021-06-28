@@ -16,25 +16,27 @@ namespace JSONToExpressionConverter
         public bool Discount { get; set; }
     }
 
-    public class Root
+    public class Criteria
     {
-        public List<Rules> criteria { get; set; }
-        public string condition { get; set; }
-    }
-
-    public class Rules
-    {
-
         public string field { get; set; }
         public string @operator { get; set; }
-
         public string value { get; set; }
-
+        public Criteria values { get; set; }
         public string condition { get; set; }
-
-        public List<Rules> criteria { get; set; }
+        public List<Criteria> criteria { get; set; }
     }
 
+    public class Values
+    {
+        public string condition { get; set; }
+        public List<Criteria> criteria { get; set; }
+    }
+
+    public class Root
+    {
+        public string condition { get; set; }
+        public List<Criteria> criteria { get; set; }
+    }
 
     //public class Condition
     //{

@@ -1,10 +1,11 @@
 //(portfolioSegment =  'Residential' AND  portfolioSegment = 'Commercial' And portfolioSegment = 'Plot') and (riskRating = 10) And (originationDate = 2021-06-27T19:00:00.000Z)
+//(( portfolioSegment = 'Residential'   or  portfolioSegment = 'Comercial'   or  portfolioSegment = 'Plot'  ) and  riskRating = 10   and  originationDate = '2021-06-27T19:00:00.000Z'  )
 
 {
   "condition": "and",
   "criteria": [
     {
-      "condition": "or",
+      "condition": "AND",
       "criteria": [
         {
           "field": "portfolioSegment",

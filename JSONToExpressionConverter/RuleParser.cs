@@ -25,6 +25,12 @@ namespace JSONToExpressionConverter
             return expression;
         }
 
+        /// <summary>
+        /// https://stackoverflow.com/questions/13911450/how-to-traverse-a-tree-with-multiple-branches
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="rules"></param>
+        /// <returns></returns>
         public static string GetRuleInLambaFormat(Root root = null, Rules rules = null)
         {
             string s = "";

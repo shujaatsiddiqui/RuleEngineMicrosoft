@@ -1,0 +1,69 @@
+{
+  "condition": "and",
+  "rules": [
+    {
+      "field": "productType",
+      "operator": "in",
+      "value": [
+        "First Lien Mortgages"
+      ]
+    },
+    {
+      "field": "daysDelinquent",
+      "operator": "<",
+      "value": 96832
+    },
+    {
+      "condition": "and",
+      "rules": [
+        {
+          "field": "state",
+          "operator": "in",
+          "value": [
+            "FL"
+          ]
+        },
+        {
+          "field": "maturityDate",
+          "operator": ">",
+          "value": "2018-09-14T19:00:00.000Z"
+        },
+        {
+          "condition": "or",
+          "rules": [
+            {
+              "field": "portfolioSegment",
+              "operator": "=",
+              "valuge": "Residential"
+            },
+            {
+              "field": "originationDate",
+              "operator": "!=",
+              "value": "2017-07-07T19:00:00.000Z"
+            },
+            {
+              "condition": "or",
+              "rules": [
+                {
+                  "field": "originationDate",
+                  "operator": ">=",
+                  "value": "2018-10-26T19:00:00.000Z"
+                },
+                {
+                  "field": "state",
+                  "operator": "=",
+                  "value": "FL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "field": "portfolioSegment",
+          "operator": "=",
+          "value": "Residential"
+        }
+      ]
+    }
+  ]
+}

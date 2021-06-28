@@ -4,7 +4,7 @@
   "condition": "and",
   "rules": [
     {
-      "condition": "and",
+      "condition": "or",
       "rules": [
         {
           "field": "portfolioSegment",

@@ -84,7 +84,7 @@ namespace JSONToExpressionConverter
         static void Main(string[] args)
         {
 
-            Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("ComplexJson.json")));
+            Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("SaadJson\\SimpleJson.json")));
             string json = RuleParser.GetRuleInLambaFormat(r, null);
             var s = "";
             //string json = JsonConvert.SerializeObject(CreateDemoData());

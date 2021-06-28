@@ -1,0 +1,75 @@
+{
+  "Conditions": [
+    {
+      "Field": "firstname",
+      "Operator": "==",
+      "Value": "shujaat",
+      "TypeOfField": "string",
+      "Children": null
+    },
+    {
+      "Field": "lastname",
+      "Operator": "==",
+      "Value": "siddiqui",
+      "TypeOfField": "string",
+      "Children": null
+    },
+    {
+      "Field": null,
+      "Operator": null,
+      "Value": null,
+      "TypeOfField": "string",
+      "Children": [
+        {
+          "Conditions": [
+            {
+              "Field": "DOB",
+              "Operator": "==",
+              "Value": "31",
+              "TypeOfField": "string",
+              "Children": null
+            },
+            {
+              "Field": "DOB",
+              "Operator": "==",
+              "Value": "28",
+              "TypeOfField": "string",
+              "Children": null
+            },
+            {
+              "Field": null,
+              "Operator": null,
+              "Value": null,
+              "TypeOfField": "string",
+              "Children": [
+                {
+                  "Conditions": [
+                    {
+                      "Field": "role",
+                      "Operator": "==",
+                      "Value": "admin",
+                      "TypeOfField": "string",
+                      "Children": null
+                    },
+                    {
+                      "Field": "role",
+                      "Operator": "==",
+                      "Value": "superadmin",
+                      "TypeOfField": "string",
+                      "Children": null
+                    }
+                  ],
+                  "ConjunctionOperator": "OR"
+                }
+              ]
+            }
+          ],
+          "ConjunctionOperator": "OR"
+        }
+      ]
+    }
+  ],
+  "ConjunctionOperator": "AND"
+}
+
+//firstname==shujaat && lastname==siddiqui && (DOB==31 || DOB==28 || (role==admin || role==superadmin))

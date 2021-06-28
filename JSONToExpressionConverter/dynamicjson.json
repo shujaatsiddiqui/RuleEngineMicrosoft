@@ -1,0 +1,12 @@
+{
+  "size": 0,
+  "filter": {
+    "and": [
+      {
+        "term": {
+          "test.boolean": 1
+        }
+      }
+    ]
+  }
+}

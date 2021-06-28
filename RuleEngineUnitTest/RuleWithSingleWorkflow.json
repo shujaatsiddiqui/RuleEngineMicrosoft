@@ -1,0 +1,37 @@
+[
+  {
+    "WorkflowName": "GenerateWarningReport",
+    "Rules": [
+      {
+        "RuleName": "SCCRRATINGabove35KA",
+        "ErrorMessage": "WARNING: SCCR RATING above 35KA may require additional components!    Please consult engineering to determine cost adder!",
+        "Expression": "PumpStationConfiguration.SCCR < 35",
+        "Actions": {
+          "OnSuccess": {
+            "Name": "OutputExpression", //Name of action you want to call
+            "Context": { //This is passed to the action as action context
+              "Expression": "PumpStationConfiguration.SCCR"
+            }
+          }
+        }
+      },
+      {
+        "RuleName": "FLARATINGabove600A",
+        "ErrorMessage": "WARNING: FLA RATING above 600A may require SCCR RATING above 35KA!   Please consult engineering to determine SCCR rating and cost adder!",
+        "Expression": "PumpStationConfiguration.FLA >= 600 AND PumpStationConfiguration.SCCR <= 35"
+         "Opera"
+      },
+      {
+        "RuleName": "Check to see if at a transfer pump is selected and VFD is present",
+        "ErrorMessage": "CAUTION: A Transfer Pump is Selected with a VFD. NOTE: Transfer is a non pressure regulating Pump.   Pump will run at preset speed!",
+        "Expression": "PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Transfer\" && r.VFD == \"None\" )"
+
+      },
+      {
+        "RuleName": "Check to see if at a water feature pump is selected and VFD is present",
+        "ErrorMessage": "CAUTION: A Water Feature Pump is Selected with a VFD.   NOTE: Water Feature is a non pressure regulating Pump.   Pump will run at preset speed!",
+        "Expression": "PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Water Feature\"  && r.VFD == \"None\" )"
+      }
+    ]
+  }
+]

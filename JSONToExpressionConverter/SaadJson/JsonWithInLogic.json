@@ -1,6 +1,6 @@
 {
   "condition": "and",
-  "rules": [
+  "criteria": [
     {
       "field": "productType",
       "operator": "in",
@@ -15,7 +15,7 @@
     },
     {
       "condition": "and",
-      "rules": [
+      "criteria": [
         {
           "field": "state",
           "operator": "in",
@@ -30,7 +30,7 @@
         },
         {
           "condition": "or",
-          "rules": [
+          "criteria": [
             {
               "field": "portfolioSegment",
               "operator": "=",
@@ -43,7 +43,7 @@
             },
             {
               "condition": "or",
-              "rules": [
+              "criteria": [
                 {
                   "field": "originationDate",
                   "operator": ">=",

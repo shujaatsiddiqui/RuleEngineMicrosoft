@@ -18,7 +18,7 @@ namespace JSONToExpressionConverter
 
     public class Root
     {
-        public List<Rules> rules { get; set; }
+        public List<Rules> criteria { get; set; }
         public string condition { get; set; }
     }
 
@@ -32,7 +32,7 @@ namespace JSONToExpressionConverter
 
         public string condition { get; set; }
 
-        public List<Rules> rules { get; set; }
+        public List<Rules> criteria { get; set; }
     }
 
 

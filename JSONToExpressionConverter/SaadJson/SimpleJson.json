@@ -2,10 +2,10 @@
 
 {
   "condition": "and",
-  "rules": [
+  "criteria": [
     {
       "condition": "or",
-      "rules": [
+      "criteria": [
         {
           "field": "portfolioSegment",
           "operator": "=",

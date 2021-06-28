@@ -2,10 +2,10 @@
 
 {
   "condition": "and",
-  "rules": [
+  "criteria": [
     {
       "condition": "or",
-      "rules": [
+      "criteria": [
         {
           "field": "portfolioSegment",
           "operator": "=",
@@ -23,7 +23,7 @@
         },
         {
           "condition": "and",
-          "rules": [
+          "criteria": [
             {
               "field": "originationDate",
               "operator": "=",
@@ -36,7 +36,7 @@
             },
             {
               "condition": "and",
-              "rules": [
+              "criteria": [
                 {
                   "field": "riskRating",
                   "operator": "=",

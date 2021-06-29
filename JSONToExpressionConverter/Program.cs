@@ -85,6 +85,7 @@ namespace JSONToExpressionConverter
         {
 
             Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("SaadJson\\SimpleJson.json")));
+            //r.criteria.Any(x => x.criteria.Any(x => x.field == "1"));
             string json = RuleParser.GetRuleInLambaFormat(r, null);
             r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("SaadJson\\JsonWithInLogic.json")));
             json = RuleParser.GetRuleInLambaFormat(r, null);

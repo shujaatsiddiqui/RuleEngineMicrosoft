@@ -11,20 +11,6 @@ namespace JSONToExpressionConverter
     public class RuleParser
     {
         static List<string> lstSpecialOperator = new List<string>() { "Any", "All" };
-        //public static string GetRuleInLambaFormat(List<Rules> rules = null, string condition = "", string expression = "")
-        //{
-        //    Root r = JsonConvert.DeserializeObject<Root>(File.ReadAllText(Program.GetFilePath("ComplexJson.json")));
-        //    foreach (var item in r.criteria)
-        //    {
-        //        if (item.condition == null)
-        //            expression += $"{item.field} {item.@operator} {item.value} {item.condition} ";
-        //        else
-        //        {
-        //            expression += GetRuleInLambaFormat(item.criteria, item.condition);
-        //        }
-        //    }
-        //    return expression;
-        //}
 
         /// <summary>
         /// https://stackoverflow.com/questions/13911450/how-to-traverse-a-tree-with-multiple-branches
@@ -57,7 +43,8 @@ namespace JSONToExpressionConverter
                 else
                 {
                     s = LoopThroughRules(rules.values, s, "Any");
-                    return $"({rules.field}.{rules.@operator}(r=>{s}))";
+                    var prefix = parentCondition == "" ? "" : "r.";
+                    return $"({prefix}{rules.field}.{rules.@operator}(r=>{s}))";
                 }
 
             }

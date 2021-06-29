@@ -19,7 +19,6 @@
         "RuleName": "FLARATINGabove600A",
         "ErrorMessage": "WARNING: FLA RATING above 600A may require SCCR RATING above 35KA!   Please consult engineering to determine SCCR rating and cost adder!",
         "Expression": "PumpStationConfiguration.FLA >= 600 AND PumpStationConfiguration.SCCR <= 35"
-         "Opera"
       },
       {
         "RuleName": "Check to see if at a transfer pump is selected and VFD is present",

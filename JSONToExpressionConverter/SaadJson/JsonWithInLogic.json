@@ -1,51 +1,51 @@
-//(portfolioSegment =  'Residential' AND  portfolioSegment = 'Commercial' And portfolioSegment = 'Plot') and (riskRating = 10) And (originationDate = 2021-06-27T19:00:00.000Z)
+//(( portfolioSegment == 'Residential'   ||  portfolioSegment == 'Comercial'   ||  portfolioSegment == 'Plot'   || (portfolioSegment.Any(r=> r.portfolioSegment == 'Residential'   && (r.portfolioSegment.Any(r=> r.DOB == 28   &&  r.portfolioSegment == 'Comercial'  ))))) &&  riskRating == 10   &&  originationDate == '2021-06-27T19:00:00.000Z'  )
 
 {
-  "condition": "and",
+  "condition": "&&",
   "criteria": [
     {
-      "condition": "or",
+      "condition": "||",
       "criteria": [
         {
           "field": "portfolioSegment",
-          "operator": "=",
+          "operator": "==",
           "value": "Residential"
         },
         {
           "field": "portfolioSegment",
-          "operator": "=",
+          "operator": "==",
           "value": "Comercial"
         },
         {
           "field": "portfolioSegment",
-          "operator": "=",
+          "operator": "==",
           "value": "Plot"
         },
         {
           "field": "portfolioSegment",
           "operator": "Any",
           "values": {
-            "condition": "and",
+            "condition": "&&",
             "criteria": [
               {
                 "field": "portfolioSegment",
-                "operator": "=",
+                "operator": "==",
                 "value": "Residential"
               },
               {
                 "field": "portfolioSegment",
                 "operator": "Any",
                 "values": {
-                  "condition": "and",
+                  "condition": "&&",
                   "criteria": [
                     {
                       "field": "DOB",
-                      "operator": "=",
+                      "operator": "==",
                       "value": "28"
                     },
                     {
                       "field": "portfolioSegment",
-                      "operator": "=",
+                      "operator": "==",
                       "value": "Comercial"
                     }
                   ]
@@ -58,12 +58,12 @@
     },
     {
       "field": "riskRating",
-      "operator": "=",
+      "operator": "==",
       "value": 10
     },
     {
       "field": "originationDate",
-      "operator": "=",
+      "operator": "==",
       "value": "2021-06-27T19:00:00.000Z"
     }
   ]

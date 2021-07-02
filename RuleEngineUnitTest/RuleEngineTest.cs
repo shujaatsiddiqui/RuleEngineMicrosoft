@@ -16,7 +16,7 @@ namespace RuleEngineUnitTest
         [Fact]
         public async void SCCRCheck()
         {
-            var input = new PumpStationConfiguration();
+            var input = new ProductFamily();
 
             RulesEngine.RulesEngine re = GetRuleEngineObj();
             var ruleParameter = new RuleParameter("PumpStationConfiguration", input);
@@ -32,22 +32,30 @@ namespace RuleEngineUnitTest
         [Fact]
         public async void CheckforNonRegulatingPumpsonVFDs()
         {
-            var input = new PumpStationConfiguration();
-            input.PumpConfiguration.Any(r => r.PumpDescription == "5");
+            var input = new List<PumpConfigurations>();
+
+            input = new List<PumpConfigurations>()
+            { new PumpConfigurations() { PumpDescription = "Water Feature", VFD = "None" },
+                  new PumpConfigurations() { PumpDescription = "Transfer", VFD = "None" }
+            };
 
             RulesEngine.RulesEngine re = GetRuleEngineObj();
-            var ruleParameter = new RuleParameter("PumpStationConfiguration", input);
+            List<List<RuleResultTree>> lstRuleResultTree = new List<List<RuleResultTree>>();
+            foreach (var item in input)
+            {
 
-            var resultList = await re.ExecuteAllRulesAsync("Check for Non Regulating Pumps on VFDs", ruleParameter);
+                var ruleParameter = new RuleParameter("PumpConfiguration", item);
 
-            Assert.True(resultList.All(r => r.IsSuccess));
+                lstRuleResultTree.Add(await re.ExecuteAllRulesAsync("Check for Non Regulating Pumps on VFDs", ruleParameter));
+            }
+            Assert.Contains(lstRuleResultTree, r => r.Any(r => r.IsSuccess));
 
         }
 
         [Fact]
         public async void GenerateWarningReport()
         {
-            var input = new PumpStationConfiguration();
+            var input = new ProductFamily();
 
             RulesEngine.RulesEngine re = GetRuleEngineObj("\\RuleWithSingleWorkflow.json");
             var ruleParameter = new RuleParameter("PumpStationConfiguration", input);
@@ -79,7 +87,7 @@ namespace RuleEngineUnitTest
         [Fact]
         public async void CheckforPumpRatchets190()
         {
-            var input = new PumpStationConfiguration();
+            var input = new ProductFamily();
 
             //var isTrue = (input.StationType == "Vertical Turbine"
             //                || input.StationType == "Vertical Turbine Quick Ship")

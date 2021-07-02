@@ -29,21 +29,7 @@
       {
         "RuleName": "Check to see if at a transfer pump is selected and VFD is present",
         "ErrorMessage": "CAUTION: A Transfer Pump is Selected with a VFD. NOTE: Transfer is a non pressure regulating Pump.   Pump will run at preset speed!",
-        "Expression": "PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Transfer\" && r.VFD == \"None\" )",
-        "Actions": {
-          "OnSuccess": {
-            "Name": "OutputExpression", //Name of action you want to call
-            "Context": { //This is passed to the action as action context
-              "expression": "5*5"
-            }
-          }
-        }
-      },
-      {
-        "RuleName": "Check to see if at a water feature pump is selected and VFD is present",
-        "ErrorMessage": "CAUTION: A Water Feature Pump is Selected with a VFD.   NOTE: Water Feature is a non pressure regulating Pump.   Pump will run at preset speed!",
-        "Expression": "PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Water Feature\"  && r.VFD == \"None\" )"
-
+        "Expression": "(PumpConfiguration.PumpDescription == \"Transfer\" && PumpConfiguration.VFD == \"None\" && PumpConfiguration.ProductFamily.StationType == \"Vertical Turbine\")"
       }
     ]
   },
@@ -53,7 +39,7 @@
       {
         "RuleName": "Check to see if at a transfer pump is selected and VFD is present",
         "ErrorMessage": "CAUTION: A Transfer Pump is Selected with a VFD. NOTE: Transfer is a non pressure regulating Pump.   Pump will run at preset speed!",
-        "Expression": "PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Transfer\" && r.VFD == \"None\" )"
+        "Expression": "PumpConfiguration.StationType == \"Vertical Turbine\" && PumpStationConfiguration.PumpConfiguration.Any(r => r.PumpDescription == \"Transfer\" && r.VFD == \"None\" )"
 
       },
       {

@@ -1,0 +1,52 @@
+[
+  {
+    "WorkflowName": "CheckforVTPumpSelectionErrors121",
+    "GlobalParams": [
+      {
+        "Name": "TotalQtyOfCat150",
+        "Expression": "ProductFamily.OptionsLists.Where(r => r.Category == \"150\").Where(r => int.Parse(r.OptionNumber.Substring(r.OptionNumber.Length - 2, 2)) > 24).Select(r => r).Sum(r => r.QTY)"
+      },
+      {
+        "Name": "Flag1",
+        "Expression": "ProductFamily.VTPumpsInGrid > ProductFamily.VTPumpsInOrder"
+      }
+    ],
+    "Rules": [
+      {
+        "RuleName": "CheckforVTPumpSelectionErrors121-02",
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for 50 Hz {0} HP {1} pump!",
+        "Expression": "ProductFamily.Hz = 50 && Flag1 == true"
+      },
+      {
+        "RuleName": "CheckforVTPumpSelectionErrors121-03",
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for {0} HP {1} pump!",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\") && Flag1 == false"
+      }
+    ]
+  },
+  {
+    "WorkflowName": "CheckforVTPumpColumnErrors150",
+    "GlobalParams": [
+      {
+        "Name": "Flag2",
+        "Expression": "ProductFamily.VTPumpsInGrid <> ProductFamily.VTColumnsInOrder"
+      },
+      {
+        "Name": "Flag3",
+        "Expression": "ProductFamily.VTPumpsInGrid < ProductFamily.VTPumpsInOrder"
+      }
+    ],
+    "Rules": [
+      {
+        "RuleName": "CheckforVTPumpSelectionErrors121-02",
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for 50 Hz {0} HP {1} pump!",
+        "Expression": "ProductFamily.Hz = 50 && Flag1 == true"
+      },
+      {
+        "RuleName": "CheckforVTPumpSelectionErrors121-03",
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for {0} HP {1} pump!",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\") && Flag1 == false"
+      }
+    ]
+  }
+]

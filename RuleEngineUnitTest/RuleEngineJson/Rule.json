@@ -25,6 +25,7 @@
   },
   {
     "WorkflowName": "Check for Non Regulating Pumps on VFDs",
+    "type": "PumpConfiguration",
     "Rules": [
       {
         "RuleName": "Check to see if at a transfer pump is selected and VFD is present",

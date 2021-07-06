@@ -1,0 +1,29 @@
+[
+  {
+    "WorkflowName": "ModerateCases",
+    "Rules": [
+      {
+        "LocalParams": [
+          {
+            "Name": "data",
+            "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber.StartsWith(\"005\")).Select(r => r).Sum(r => r.QTY)"
+          }
+        ],
+        "RuleName": "CheckforAgencyType005",
+        "ErrorMessage": "WARNING: 005 - APPROVAL TYPE is missing! Please select an Approval Type!",
+        "Expression": "(ProductFamily.StationType == \"Vertical Turbine Quick Ship\" || ProductFamily.StationType == \"Vertical Turbine\") && data < 1"
+      },
+      {
+        "LocalParams": [
+          {
+            "Name": "TotalQuantityOfOptionNumber140",
+            "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber.StartsWith(\"140\")).Select(r => r).Sum(r => r.QTY)"
+          }
+        ],
+        "RuleName": "CheckforVTDischargeHeadErrors140",
+        "ErrorMessage": "WARNING: 005 - APPROVAL TYPE is missing! Please select an Approval Type!",
+        "Expression": "(ProductFamily.StationType == \"Vertical Turbine Quick Ship\" || ProductFamily.StationType == \"Vertical Turbine\") && TotalQuantityOfOptionNumber140 < ProductFamily.VTPumpsInOrder"
+      }
+    ]
+  }
+]

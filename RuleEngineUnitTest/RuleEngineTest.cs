@@ -183,24 +183,31 @@ namespace RuleEngineUnitTest
             var ruleParameter = new RuleParameter[] { new RuleParameter("ProductFamily", ProductFamily) };
 
             var resultList = await re.ExecuteAllRulesAsync("CheckforVTPumpColumnErrors150", ruleParameter);
-            List<string> lsterr = new List<string>();
 
-            //foreach (var item in resultList)
-            //{
-            //    MatchCollection matchCollection = Regex.Matches(item.ExceptionMessage, @"\[(.*?)\]");
-            //    //2
-            //    int count = matchCollection.Count;
-            //    for (int i = 0; i < matchCollection.Count; i++)
-            //    {
-            //        string[] values = matchCollection[i].Value.Split(',');
-            //        for (int a = 0; a < values.Length; a++)
-            //        {
-            //            string str = Regex.Matches(item.ExceptionMessage, @"\{(.*?)\}")[0].Value.ToString();
-            //            item.ExceptionMessage = item.ExceptionMessage.Replace(str, values[a]);
-            //        }
-            //        //var str = Regex.Replace(item.ExceptionMessage, @"\[(.*?)\]",)
-            //    }
-            //}
+            List<string> lsterr = new List<string>();
+            foreach (var item in resultList)
+            {
+                //// this is where i get error message
+                //string exceptionMessage = item.ExceptionMessage; // WARNING: 121 - VT PUMP Manual Pick Required for {[60,70]} HP {["Water Feature","Transfer"]} Pump!
+                //MatchCollection matchCollection = Regex.Matches(exceptionMessage, @"\[(.*?)\]"); //2
+                //int count = matchCollection.Count;
+                //for (int i = 0; i < matchCollection.Count; i++)
+                //{
+                //    string errorMessage = exceptionMessage;
+                //    string[] values = matchCollection[i].Value.Split(',');
+                //    for (int a = 0; a < values.Length; a++)
+                //    {
+                //        string str = Regex.Matches(errorMessage, @"\{(.*?)\}")?[0].Value.ToString();
+                //        string replaceValue = matchCollection[a].Value.Split(',')[i].Replace("[", "").Replace("]", "");
+                //        errorMessage = errorMessage.Replace(str, replaceValue);
+                //    }
+                //    lsterr.Add(errorMessage);
+                //}
+                foreach (var str in CreateMultipleStringsOnTheNumberOfItemsInBracket(item.ExceptionMessage))
+                {
+                    lsterr.Add(str);
+                }
+            }
 
             Assert.True(resultList.All(r => r.IsSuccess));
 
@@ -248,6 +255,25 @@ namespace RuleEngineUnitTest
             var re = new RulesEngine.RulesEngine(lstWorkflows, null);
             return re;
 
+        }
+
+        public static List<string> CreateMultipleStringsOnTheNumberOfItemsInBracket(string text)
+        {
+            List<string> lstStrings = new List<string>();
+            MatchCollection matchCollection = Regex.Matches(text, @"\[(.*?)\]");
+            int? iterationCount = matchCollection?[0].Value.Split(',').Length;
+            for (int i = 0; i < iterationCount; i++)
+            {
+                string msg = text;
+                for (int a = 0; a < matchCollection.Count; a++)
+                {
+                    string str = Regex.Matches(msg, @"\[(.*?)\]")?[0].Value.ToString();
+                    string replaceValue = matchCollection[a].Value.Split(',')[i].Replace("[", "").Replace("]", "");
+                    msg = msg.Replace(str, replaceValue);
+                }
+                lstStrings.Add(msg);
+            }
+            return lstStrings;
         }
         #endregion
     }

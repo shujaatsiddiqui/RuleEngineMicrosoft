@@ -47,7 +47,7 @@
     "Rules": [
       {
         "RuleName": "CheckforVTPumpSelectionErrors121-03",
-        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for {$(HP)} HP {$(Pump)} Pump!",
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for $(HP) HP $(Pump) Pump!",
         "Expression": "ProductFamily.PumpConfigurations.Any(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\") && 1 = 0"
       }
     ]

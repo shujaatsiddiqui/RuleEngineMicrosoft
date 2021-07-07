@@ -1,0 +1,84 @@
+[
+  {
+    "WorkflowName": "CheckforPumpRatchets190",
+    "GlobalParams": [
+      {
+        "Name": "QTY",
+        "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber.StartsWith(\"005\")).Sum(r => r.QTY)"
+      },
+      {
+        "Name": "Flag1",
+        "Expression": "QTY > 0"
+      },
+      {
+        "Name": "Flag2",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.HP >= 75)"
+      },
+      {
+        "Name": "Flag3",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.HP == 100)"
+      },
+      {
+        "Name": "Flag4",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.HP == 125)"
+      },
+      {
+        "Name": "OptionNumberStartWith",
+        "Expression": "190"
+      },
+      {
+        "Name": "NumberOfPumps75HPorLess",
+        "Expression": "ProductFamily.PumpConfigurations.Where(r => r.HP <= 75).Sum(r => r.Qty)"
+      },
+      {
+        "Name": "NumberOfPumps100HP",
+        "Expression": "ProductFamily.PumpConfigurations.Where(r => r.HP == 100).Sum(r => r.Qty)"
+      },
+      {
+        "Name": "NumberOfPumps125HP",
+        "Expression": "ProductFamily.PumpConfigurations.Where(r => r.HP == 125).Sum(r => r.Qty)"
+      },
+      {
+        "Name": "NumberOfrachetoptions75HP",
+        "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber == \"190-0000001\").Sum(r => r.QTY)"
+      },
+      {
+        "Name": "NumberOfrachetoptions100HP",
+        "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber == \"190-0000002\").Sum(r => r.QTY)"
+      },
+      {
+        "Name": "NumberOfrachetoptions125HP",
+        "Expression": "ProductFamily.OptionsLists.Where(r => r.OptionNumber == \"190-0000003\").Sum(r => r.QTY)"
+      },
+      {
+        "Name": "Flag5",
+        "Expression": "NumberOfrachetoptions75HP > 0"
+      },
+      {
+        "Name": "Flag6",
+        "Expression": "NumberOfrachetoptions100HP > 0"
+      },
+      {
+        "Name": "Flag7",
+        "Expression": "NumberOfrachetoptions125HP > 0"
+      }
+    ],
+    "Rules": [
+      {
+        "RuleName": "Rule01",
+        "ErrorMessage": "CAUTION: 190 - 75HP RATCHET Selected without Pump!    Please review Ratchet types!",
+        "Expression": "Flag5 && Flag2"
+      },
+      {
+        "RuleName": "Rule02",
+        "ErrorMessage": "CAUTION: 190 - 100HP RATCHET Selected without 100HP Pump!    Please review Ratchet types!",
+        "Expression": "Flag5 && Flag3"
+      },
+      {
+        "RuleName": "Rule05",
+        "ErrorMessage": "CAUTION: 190 - 100HP RATCHET Selected without 100HP Pump!    Please review Ratchet types!",
+        "Expression": "Flag6 && Flag3 && NumberOfrachetoptions100HP <> NumberOfPumps100HP"
+      }
+    ]
+  }
+]

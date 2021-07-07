@@ -42,6 +42,7 @@ namespace RuleEngineUnitTest.Model
         public int HP { get; internal set; }
 
         public bool AutoPick { get; set; } = false;
+        public decimal Qty { get; set; }
         //public ProductFamily ProductFamily { get; set; }
 
     }

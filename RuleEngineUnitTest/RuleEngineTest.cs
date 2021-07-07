@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace RuleEngineUnitTest
@@ -167,8 +168,8 @@ namespace RuleEngineUnitTest
 
             ProductFamily.PumpConfigurations = new List<PumpConfiguration>()
             {
-                new PumpConfiguration(){HP = 5,PumpDescription = "Transfer" },
-                new PumpConfiguration(){HP = 60,PumpDescription = "Water Feature" }
+                new PumpConfiguration(){HP = 60,PumpDescription = "Water Feature" },
+                new PumpConfiguration(){HP = 70,PumpDescription = "Transfer" }
             };
 
             ProductFamily.VTPumpsInGrid = ProductFamily.VTPumpsInOrder = 2;
@@ -181,20 +182,58 @@ namespace RuleEngineUnitTest
             RulesEngine.RulesEngine re = GetRuleEngineObj("ComplexScenarios.json");
             var ruleParameter = new RuleParameter[] { new RuleParameter("ProductFamily", ProductFamily) };
 
-            var resultList = await re.ExecuteAllRulesAsync("CheckforVTPumpSelectionErrors121", ruleParameter);
+            var resultList = await re.ExecuteAllRulesAsync("CheckforVTPumpColumnErrors150", ruleParameter);
+            List<string> lsterr = new List<string>();
 
             //foreach (var item in resultList)
             //{
-            //    if (item.IsSuccess)
+            //    MatchCollection matchCollection = Regex.Matches(item.ExceptionMessage, @"\[(.*?)\]");
+            //    //2
+            //    int count = matchCollection.Count;
+            //    for (int i = 0; i < matchCollection.Count; i++)
             //    {
-            //        foreach (var a in ((ProductFamily)item.Inputs["ProductFamily"]).PumpConfigurations)
+            //        string[] values = matchCollection[i].Value.Split(',');
+            //        for (int a = 0; a < values.Length; a++)
             //        {
-            //            if(a.HP = 50)
-            ////        }
+            //            string str = Regex.Matches(item.ExceptionMessage, @"\{(.*?)\}")[0].Value.ToString();
+            //            item.ExceptionMessage = item.ExceptionMessage.Replace(str, values[a]);
+            //        }
+            //        //var str = Regex.Replace(item.ExceptionMessage, @"\[(.*?)\]",)
             //    }
             //}
 
             Assert.True(resultList.All(r => r.IsSuccess));
+
+        }
+
+
+        [Fact]
+        public async void CheckforPumpRatchets190()
+        {
+            var input = new ProductFamily();
+            input.OptionsLists = new List<OptionsList>()
+            {
+                new OptionsList(){ OptionNumber = "005-0000002", QTY = 1 },
+                 new OptionsList(){ OptionNumber = "190-0000001", QTY = 2 },
+                 new OptionsList(){ OptionNumber = "190-0000002", QTY = 3 },
+                 new OptionsList(){ OptionNumber = "190-0000003", QTY = 4 }
+            };
+
+            input.PumpConfigurations = new List<PumpConfiguration>()
+            {
+                new PumpConfiguration(){HP = 75,PumpDescription = "Transfer", Qty = 1 },
+                 new PumpConfiguration(){HP = 100,PumpDescription = "Transfer", Qty = 2 },
+                  new PumpConfiguration(){HP = 125,PumpDescription = "Transfer", Qty = 3 }
+            };
+
+            // input.OptionsLists.Where(r => r.OptionNumber.StartsWith("005")).Sum(r => r.QTY);
+
+            //input.PumpConfigurations.Where(r => r.HP >= 75).Sum(r => r.Qty);
+
+            RulesEngine.RulesEngine re = GetRuleEngineObj("CheckforPumpRatchets190.json");
+            var ruleParameter = new RuleParameter[] { new RuleParameter("ProductFamily", input) };
+            var resultList = await re.ExecuteAllRulesAsync("CheckforPumpRatchets190", ruleParameter);
+            Assert.True(true);
 
         }
         #endregion

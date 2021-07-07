@@ -34,18 +34,21 @@
       {
         "Name": "Flag3",
         "Expression": "ProductFamily.VTPumpsInGrid < ProductFamily.VTPumpsInOrder"
+      },
+      {
+        "Name": "HP",
+        "Expression": "ProductFamily.PumpConfigurations.Where(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\").Select(r=>r.HP)"
+      },
+      {
+        "Name": "Pump",
+        "Expression": "ProductFamily.PumpConfigurations.Where(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\").Select(r=>r.PumpDescription)"
       }
     ],
     "Rules": [
       {
-        "RuleName": "CheckforVTPumpSelectionErrors121-02",
-        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for 50 Hz {0} HP {1} pump!",
-        "Expression": "ProductFamily.Hz = 50 && Flag1 == true"
-      },
-      {
         "RuleName": "CheckforVTPumpSelectionErrors121-03",
-        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for {0} HP {1} pump!",
-        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\") && Flag1 == false"
+        "ErrorMessage": "WARNING: 121 - VT PUMP Manual Pick Required for {$(HP)} HP {$(Pump)} Pump!",
+        "Expression": "ProductFamily.PumpConfigurations.Any(r => r.PumpDescription == \"Water Feature\" || r.PumpDescription == \"Transfer\") && 1 = 0"
       }
     ]
   }

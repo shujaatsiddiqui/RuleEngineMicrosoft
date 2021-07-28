@@ -14,21 +14,20 @@ namespace RuleEngineUnitTest
 
     public class RuleEngineTest
     {
-        //[Fact]
-        //public async void SCCRCheck()
-        //{
-        //    var input = new ProductFamily();
+        [Fact]
+        public async void SCCRCheck()
+        {
+            //input data
+            var ProductFamily = new ProductFamily();
 
-        //    RulesEngine.RulesEngine re = GetRuleEngineObj();
-        //    var ruleParameter = new RuleParameter("PumpStationConfiguration", input);
+            RulesEngine.RulesEngine re = GetRuleEngineObj();
+            var ruleParameter = new RuleParameter("ProductFamily", ProductFamily);
 
-        //    var resultList = await re.ExecuteAllRulesAsync("SCCRCheck", ruleParameter);
+            var resultList = await re.ExecuteAllRulesAsync("SCCRCheck", ruleParameter);
 
-        //    //input.PumpConfiguration.ForEach(x=>x.QTY = 5);
+            Assert.True(resultList.All(r => r.IsSuccess == false));
 
-        //    Assert.True(resultList.All(r => r.IsSuccess == false));
-
-        //}
+        }
 
         //[Fact]
         //public async void CheckforNonRegulatingPumpsonVFDs()
